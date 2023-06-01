@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}Dropdown Calendar Template{% endblock %}
+
+{% block stylesheets %}
+
+{% endblock %}
+
+{% block content %}
+<h1>Shift Planner</h1>
+
+<form>
+	<!--
+		I want this to be run automatically,
+		so as you pick a date and a shift 
+		it automatically pull the employees 
+		from that specific shift
+
+		- probably needs AJAX
+	-->
+	<label for="calendar">Select a date:</label>
+	<input type="date" id="calendar" name="calendar">
+
+	<label for="selectedShift">Shift:</label>
+	<select id="selectedShift">
+		<option value="option1">Option 1</option>
+		<option value="option2">Option 2</option>
+		<option value="option3">Option 3</option>
+	</select>
+	<ul id="dayShift" class="selectedEmployees"></ul>
+
+
+	<label for="mixers">Mixers:</label>
+	<select id="mixers">
+		<option value="option1">Option 1</option>
+		<option value="option2">Option 2</option>
+		<option value="option3">Option 3</option>
+	</select>
+	<ul id="mixingEmployees" class="selectedEmployees">
+	</ul>
+
+	<label for="customerExperience">Customer Experience:</label>
+	<select id="customerExperience">
+		<option value="option1">Option 1</option>
+		<option value="option2">Option 2</option>
+		<option value="option3">Option 3</option>
+	</select>
+	<ul id="cxEmployees" class="selectedEmployees">
+	</ul>
+
+	<label for="dressing">Dressing:</label>
+	<select id="dressing">
+		<option value="option1">Option 1</option>
+		<option value="option2">Option 2</option>
+		<option value="option3">Option 3</option>
+	</select>
+	<ul id="dressingEmployees" class="selectedEmployees">
+	</ul>
+
+	<label for="ovens">Ovens:</label>
+	<select id="ovens">
+		<option value="option1">Option 1</option>
+		<option value="option2">Option 2</option>
+		<option value="option3">Option 3</option>
+	</select>
+	<ul id="ovensEmployees" class="selectedEmployees">
+	</ul>
+
+	<label for="prep">Prep:</label>
+	<select id="prep">
+		<option value="option1">Option 1</option>
+		<option value="option2">Option 2</option>
+		<option value="option3">Option 3</option>
+	</select>
+	<ul id="prepEmployees" class="selectedEmployees">
+	</ul>
+
+	<ul id="unassignedEmployees" class="selectedEmployees">
+		<li><b><u>Unassigned Employees</u></b></li>
+		<!--
+				Might be cool to add a 
+				dropdown menu to each of 
+				the names so you can assign 
+				the employees a station from this list
+
+				Would need a Jinja/Flask For Loop
+			-->
+	</ul>
+
+	<button type="submit">Submit</button>
+</form>
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}

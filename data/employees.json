@@ -1,0 +1,27 @@
+[
+	{
+		"id": 1,
+		"fname": "John",
+		"lname": "Doe"
+	},
+	{
+		"id": 2,
+		"fname": "Jane",
+		"lname": "Doe"
+	},
+	{
+		"id": 3,
+		"fname": "Cami",
+		"lname": "McFarlane"
+	},
+	{
+		"id": 4,
+		"fname": "Rob",
+		"lname": "McFarlane"
+	},
+	{
+		"id": 5,
+		"fname": "Teagan",
+		"lname": "Petterson"
+	}
+]
