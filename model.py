@@ -15,3 +15,11 @@ class EmployeeShifts:
 		self.date = date
 		self.start_time = start_time
 		self.end_time = end_time
+
+""" 
+	Once a database is made:
+	(this also might need to take place at lease partially in the ajax page)
+	Have a table of "set" shifts.
+	If the selected date exists in the "set" shifts, present all those elements on the page
+	If not, create a new row with assignments
+"""
