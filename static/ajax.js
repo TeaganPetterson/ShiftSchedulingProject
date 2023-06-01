@@ -1,0 +1,2 @@
+// Here I want to create a few functions that will load everytime something is changed on the page instead of waiting for a refresh
+// Things like selecting a new date or shift will show the selected shifts' employees, and stuff like adding an employee to a new station will automatically save it to a database

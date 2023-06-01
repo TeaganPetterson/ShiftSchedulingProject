@@ -17,6 +17,9 @@ with open('data/employee_shift.json') as f:
 with open('data/employees.json') as e:
     employee_data = json.loads(e.read())
 
+"""
+	Right now I'm just instantiating classes for each of them, but not storing it anywhere in a database, but I'm sure that won't be difficult, this was just the first step in my head
+"""
 for emp in employee_data:
     model.Employee(emp.id, emp.fname, emp.lname)
 
