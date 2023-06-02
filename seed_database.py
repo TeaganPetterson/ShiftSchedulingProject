@@ -16,14 +16,18 @@ os.system('createdb shift_planner')
 model.connect_to_db(server.app)
 model.db.create_all()
 
-with open('data/employee_shift.json') as f:
-    shifts_data = json.loads(f.read())
+with open('data/employee_shift.json') as e:
+    shifts_data = json.loads(e.read())
     
 with open('data/employees.json') as e:
     employee_data = json.loads(e.read())
 
 with open('data/shifts.json') as e:
     set_shifts_data = json.loads(e.read())
+    
+with open('data/stations.json') as e:
+    stations_data = json.loads(e.read())
+    
 """
 	Right now I'm just instantiating classes for each of them, but not storing it anywhere in a database, but I'm sure that won't be difficult, this was just the first step in my head
 """
@@ -36,10 +40,8 @@ for emp in employee_data:
     db_emp = crud.create_employee(fname, lname)
     emps.append(db_emp)
 
-
 model.db.session.add_all(emps)
 model.db.session.commit()
-
 
 for s in shifts_data:
     # shift_id = s['id']
@@ -64,6 +66,16 @@ for shift in set_shifts_data:
 model.db.session.add_all(set_shifts)
 model.db.session.commit()
     
+stations = []
+for st in stations_data:
+    station_name = st["station"]
+    station = crud.create_station(station_name)
+    stations.append(station)
+    
+model.db.session.add_all(stations)
+model.db.session.commit()
+
+
 # for n in range(5, 24):
     
 # 	"""

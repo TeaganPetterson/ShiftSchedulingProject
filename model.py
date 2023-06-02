@@ -34,6 +34,13 @@ class SetShift(db.Model):
 	end_time = db.Column(db.String(15), nullable = False)
 	display = db.Column(db.String(15), nullable = False)
 
+class Station(db.Model):
+
+	__tablename__ = "stations"
+
+	id = db.Column(db.Integer, primary_key=True, autoincrement = True)
+	station = db.Column(db.String(25), nullable = False)
+
 """ 
 	Once a database is made:
 	(this also might need to take place at lease partially in the ajax page)

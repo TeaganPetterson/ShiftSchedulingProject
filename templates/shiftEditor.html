@@ -9,7 +9,7 @@
 {% block content %}
 <h1>Shift Planner</h1>
 
-<form>
+<form action="/switchShifts" method="POST" id="shiftAssignment">
 	<!--
 		I want this to be run automatically,
 		so as you pick a date and a shift 
@@ -23,75 +23,37 @@
 
 	<label for="selectedShift">Shift:</label>
 	<select id="selectedShift">
-		<option value="option1">Option 1</option>
-		<option value="option2">Option 2</option>
-		<option value="option3">Option 3</option>
+		{% for shift in shifts %}
+		<option value="{{ shift }}" id="{{ shift.id }}">{{ shift.display }}</option>
+		{% endfor %}
 	</select>
 	<ul id="dayShift" class="selectedEmployees"></ul>
 
+	{% for station in stations %}
+	<label for="{{ station.station }}">{{ station.station }}</label>
+	<select id="{{ station.station }}">
 
-	<label for="mixers">Mixers:</label>
-	<select id="mixers">
-		<option value="option1">Option 1</option>
-		<option value="option2">Option 2</option>
-		<option value="option3">Option 3</option>
 	</select>
-	<ul id="mixingEmployees" class="selectedEmployees">
+	<ul id="{{ station.station }}Employees" class="selectedEmployees">
 	</ul>
-
-	<label for="customerExperience">Customer Experience:</label>
-	<select id="customerExperience">
-		<option value="option1">Option 1</option>
-		<option value="option2">Option 2</option>
-		<option value="option3">Option 3</option>
-	</select>
-	<ul id="cxEmployees" class="selectedEmployees">
-	</ul>
-
-	<label for="dressing">Dressing:</label>
-	<select id="dressing">
-		<option value="option1">Option 1</option>
-		<option value="option2">Option 2</option>
-		<option value="option3">Option 3</option>
-	</select>
-	<ul id="dressingEmployees" class="selectedEmployees">
-	</ul>
-
-	<label for="ovens">Ovens:</label>
-	<select id="ovens">
-		<option value="option1">Option 1</option>
-		<option value="option2">Option 2</option>
-		<option value="option3">Option 3</option>
-	</select>
-	<ul id="ovensEmployees" class="selectedEmployees">
-	</ul>
-
-	<label for="prep">Prep:</label>
-	<select id="prep">
-		<option value="option1">Option 1</option>
-		<option value="option2">Option 2</option>
-		<option value="option3">Option 3</option>
-	</select>
-	<ul id="prepEmployees" class="selectedEmployees">
-	</ul>
-
-	<ul id="unassignedEmployees" class="selectedEmployees">
-		<li><b><u>Unassigned Employees</u></b></li>
-		<!--
-				Might be cool to add a 
-				dropdown menu to each of 
-				the names so you can assign 
-				the employees a station from this list
-
-				Would need a Jinja/Flask For Loop
-			-->
-		{% for emp in emps %}
-		<li>{{ emp.fname }} {{ emp.lname }}</li>
-		{% endfor %}
-	</ul>
+	{% endfor %}
 
 	<button type="submit">Submit</button>
 </form>
+<ul id="unassignedEmployees" class="selectedEmployees">
+	<li><b><u>Unassigned Employees</u></b></li>
+	<!--
+			Might be cool to add a 
+			dropdown menu to each of 
+			the names so you can assign 
+			the employees a station from this list
+
+			Would need a Jinja/Flask For Loop
+		-->
+	{% for emp in emps %}
+	<li>{{ emp.fname }} {{ emp.lname }}</li>
+	{% endfor %}
+</ul>
 {% endblock %}
 
 {% block scripts %}

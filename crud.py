@@ -1,4 +1,4 @@
-from model import db, Employee, EmployeeShift, SetShift, connect_to_db
+from model import db, Employee, EmployeeShift, SetShift, Station, connect_to_db
 
 def create_employee(fname, lname):
     employee = Employee(fname = fname, lname = lname)
@@ -22,3 +22,15 @@ def create_employee_shift(emp_id, date, start_time, end_time):
 def create_set_shift(start, end, display):
     set_shift = SetShift(start_time = start, end_time = end, display = display)
     return set_shift
+
+def get_all_set_shifts():
+    all_shifts = SetShift.query.all()
+    return all_shifts
+
+def create_station(st):
+    station = Station(station = st)
+    return station
+
+def get_all_stations():
+    all_stations = Station.query.all()
+    return all_stations

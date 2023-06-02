@@ -1,0 +1,22 @@
+[
+	{
+		"id": 1,
+		"station": "Mixing"
+	},
+	{
+		"id": 2,
+		"station": "Customer Experience"
+	},
+	{
+		"id": 3,
+		"station": "Dressing"
+	},
+	{
+		"id": 4,
+		"station": "Ovens"
+	},
+	{
+		"id": 5,
+		"station": "Prep"
+	}
+]
