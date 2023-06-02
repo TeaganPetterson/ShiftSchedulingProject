@@ -1,0 +1,38 @@
+[
+	{
+		"id": 1,
+		"start_time": "05:00:00",
+		"end_time": "08:00:00",
+		"display_value": "Open"
+	},
+	{
+		"id": 2,
+		"start_time": "08:00:00",
+		"end_time": "11:00:00",
+		"display_value": "8 AM - 11 AM"
+	},
+	{
+		"id": 3,
+		"start_time": "11:00:00",
+		"end_time": "14:00:00",
+		"display_value": "11 AM - 2 PM"
+	},
+	{
+		"id": 4,
+		"start_time": "14:00:00",
+		"end_time": "17:00:00",
+		"display_value": "2 PM - 5 PM"
+	},
+	{
+		"id": 5,
+		"start_time": "17:00:00",
+		"end_time": "20:00:00",
+		"display_value": "5 PM - 8 PM"
+	},
+	{
+		"id": 6,
+		"start_time": "20:00:00",
+		"end_time": "24:00:00",
+		"display_value": "Close"
+	}
+]

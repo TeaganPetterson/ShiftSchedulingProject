@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Dropdown Calendar Template{% endblock %}
+{% block title %}Shift Planner{% endblock %}
 
 {% block stylesheets %}
 
@@ -85,8 +85,8 @@
 
 				Would need a Jinja/Flask For Loop
 			-->
-		{% for emp in emp_names %}
-		<li>{{ emp }}</li>
+		{% for emp in emps %}
+		<li>{{ emp.fname }} {{ emp.lname }}</li>
 		{% endfor %}
 	</ul>
 
