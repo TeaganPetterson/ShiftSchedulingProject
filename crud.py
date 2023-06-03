@@ -1,4 +1,5 @@
 from model import db, Employee, EmployeeShift, SetShift, Station, connect_to_db
+from datetime import datetime, time
 
 def create_employee(fname, lname):
     employee = Employee(fname = fname, lname = lname)
@@ -34,3 +35,24 @@ def create_station(st):
 def get_all_stations():
     all_stations = Station.query.all()
     return all_stations
+
+def is_in_time_range(current_time, start_time, end_time):
+	if start_time <= current_time <= end_time:
+		return True
+	else:
+		return False
+
+def shifts_in_range(set_shift_id):
+    all_shifts = EmployeeShift.query.all()
+    filtered_shifts = []
+    set_shift = SetShift.query.get(set_shift_id)
+    start_string = set_shift.start_time
+    start_time = datetime.strptime(start_string, "%H-%M-%S")
+    end_string = set_shift.end_time
+    end_time = datetime.strptime(end_string, "%H-%M-%S")
+    for shift in all_shifts:
+        emp_start = shift.start_time
+        emp_end = shift.end_time
+        if is_in_time_range(emp_start, start_time, end_time) or is_in_time_range(emp_start, start_time, end_time):
+            filtered_shifts.append(shift)
+    return filtered_shifts

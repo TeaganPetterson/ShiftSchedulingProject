@@ -24,8 +24,9 @@ def shift_viewer():
 def switch_shifts():
     date = request.form.get("calendar")
     print(date)
-    shift = request.form.get("selectedShift")
-    print(shift)
+    shift_id = request.form.get("selectedShift")
+    print(shift_id)
+    print(crud.shifts_in_range(shift_id))
     return redirect('/')
 
 if __name__ == "__main__":

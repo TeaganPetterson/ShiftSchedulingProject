@@ -22,9 +22,9 @@
 	<input type="date" id="calendar" name="calendar">
 
 	<label for="selectedShift">Shift:</label>
-	<select id="selectedShift">
+	<select id="selectedShift" name="selectedShift">
 		{% for shift in shifts %}
-		<option value="{{ shift }}" id="{{ shift.id }}">{{ shift.display }}</option>
+		<option value="{{ shift.id }}" id="shift{{ shift.id }}">{{ shift.display }}</option>
 		{% endfor %}
 	</select>
 	<ul id="dayShift" class="selectedEmployees"></ul>
