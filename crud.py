@@ -37,7 +37,7 @@ def get_all_stations():
     return all_stations
 
 def is_in_time_range(current_time, start_time, end_time):
-	if start_time <= current_time <= end_time:
+	if start_time <= current_time < end_time:
 		return True
 	else:
 		return False
@@ -47,12 +47,18 @@ def shifts_in_range(set_shift_id):
     filtered_shifts = []
     set_shift = SetShift.query.get(set_shift_id)
     start_string = set_shift.start_time
-    start_time = datetime.strptime(start_string, "%H-%M-%S")
+    start_time = datetime.strptime(start_string, "%H:%M:%S")
     end_string = set_shift.end_time
-    end_time = datetime.strptime(end_string, "%H-%M-%S")
+    end_time = datetime.strptime(end_string, "%H:%M:%S")
     for shift in all_shifts:
-        emp_start = shift.start_time
-        emp_end = shift.end_time
-        if is_in_time_range(emp_start, start_time, end_time) or is_in_time_range(emp_start, start_time, end_time):
-            filtered_shifts.append(shift)
+        emp_start = datetime.strptime(shift.start_time, "%H:%M:%S")
+        emp_end = datetime.strptime(shift.end_time, "%H:%M:%S")
+        if is_in_time_range(emp_start, start_time, end_time) or is_in_time_range(emp_end, start_time, end_time):
+            filtered_shifts.append(shift.id)
     return filtered_shifts
+
+def get_employees_from_shift_ids(shift_ids):
+    Employee.query.get(shift_ids).all()
+    """
+    use the magic relationships to acces employee names from emp_shift id's 
+    """

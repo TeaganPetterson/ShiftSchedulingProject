@@ -14,6 +14,7 @@ class Employee(db.Model):
 	fname = db.Column(db.String(20), nullable = False)
 	lname = db.Column(db.String(20), nullable = False)
 
+	employee_shift = db.relationship('EmployeeShift', back_populates='employee')
 
 class EmployeeShift(db.Model):
 
@@ -24,6 +25,9 @@ class EmployeeShift(db.Model):
 	date = db.Column(db.String(15), nullable = False)
 	start_time = db.Column(db.String(15), nullable = False)
 	end_time = db.Column(db.String(15), nullable = False)
+
+	employee = db.relationship('Employee', back_populates='employee_shifts')
+
 
 class SetShift(db.Model):
       
