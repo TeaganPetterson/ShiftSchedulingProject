@@ -14,7 +14,7 @@ class Employee(db.Model):
 	fname = db.Column(db.String(20), nullable = False)
 	lname = db.Column(db.String(20), nullable = False)
 
-	employee_shift = db.relationship('EmployeeShift', back_populates='employee')
+	employee_shifts = db.relationship('EmployeeShift', back_populates='employee')
 
 class EmployeeShift(db.Model):
 
