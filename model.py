@@ -45,6 +45,17 @@ class Station(db.Model):
 	id = db.Column(db.Integer, primary_key=True, autoincrement = True)
 	station = db.Column(db.String(25), nullable = False)
 
+class Assignment(db.Model):
+
+	__tablename__ = "assignments"
+
+	id = db.Column(db.Integer, primary_key=True, autoincrement = True)
+	station_id = db.Column(db.Integer, db.ForeignKey("stations.id"), nullable=False)
+	emp_id = db.Column(db.Integer, db.ForeignKey("employees.id"), nullable=False)
+	shift_id = db.Column(db.Integer, db.ForeignKey("set_shifts.id"), nullable=False)
+	date = date = db.Column(db.String(15), nullable = False)
+
+
 """ 
 	Once a database is made:
 	(this also might need to take place at lease partially in the ajax page)

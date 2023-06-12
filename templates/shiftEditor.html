@@ -9,15 +9,7 @@
 {% block content %}
 <h1>Shift Planner</h1>
 
-<form action="/switchShifts" method="POST" id="shiftAssignment">
-	<!--
-		I want this to be run automatically,
-		so as you pick a date and a shift 
-		it automatically pull the employees 
-		from that specific shift
-
-		- probably needs AJAX
-	-->
+<form action="/switchShifts" method="POST" id="shiftSelection">
 	<label for="calendar">Select a date:</label>
 	<input type="date" id="calendar" name="calendar">
 
@@ -27,14 +19,24 @@
 		<option value="{{ shift.id }}" id="shift{{ shift.id }}">{{ shift.display }}</option>
 		{% endfor %}
 	</select>
-	<ul id="dayShift" class="selectedEmployees"></ul>
-
+	<ul id="dayShift" class="selectedEmployees">
+		{% for employee_id, employee_info in emps.items() %}
+		<li>{{ employee_info.first }} {{ employee_info.last }}</li>
+		{% endfor %}
+	</ul>
+	<button type="submit">Submit</button>
+</form><br>
+<form action="/makeAssignments" method="POST" id="shiftAssignment">
 	{% for station in stations %}
 	<label for="{{ station.station }}">{{ station.station }}</label>
 	<select id="{{ station.station }}">
-
+		<!-- Populate the dropdown menu with employees -->
+		{% for employee_id, employee_info in emps.items() %}
+		<option value="{{ employee_id }}">{{ employee_info.first }} {{ employee_info.last }}</option>
+		{% endfor %}
 	</select>
 	<ul id="{{ station.station }}Employees" class="selectedEmployees">
+		<!-- Display the selected employees for each station -->
 	</ul>
 	{% endfor %}
 
@@ -42,16 +44,8 @@
 </form>
 <ul id="unassignedEmployees" class="selectedEmployees">
 	<li><b><u>Unassigned Employees</u></b></li>
-	<!--
-			Might be cool to add a 
-			dropdown menu to each of 
-			the names so you can assign 
-			the employees a station from this list
-
-			Would need a Jinja/Flask For Loop
-		-->
-	{% for emp in emps %}
-	<li>{{ emp }}</li>
+	{% for employee_id, employee_info in emps.items() %}
+	<li>{{ employee_info.first }} {{ employee_info.last }}</li>
 	{% endfor %}
 </ul>
 {% endblock %}

@@ -1,9 +1,14 @@
-from model import db, Employee, EmployeeShift, SetShift, Station, connect_to_db
+from model import db, Employee, EmployeeShift, SetShift, Station, Assignment, connect_to_db
 from datetime import datetime, time
 
 def create_employee(fname, lname):
-    employee = Employee(fname = fname, lname = lname)
+    employee = Employee(fname = fname, 
+                        lname = lname)
     return employee
+
+# def create_assignment(emp_id, station_id, shift_id, date):
+#     employee = Employee(fname = fname, lname = lname)
+#     return employee
 
 def get_all_employees():
     employees = Employee.query.all()
@@ -17,11 +22,16 @@ def get_unassigned_employees():
 #     # pull employee shifts that start before the end time and end after the start time
 
 def create_employee_shift(emp_id, date, start_time, end_time):
-    emp_shift = EmployeeShift(emp_id = emp_id, date = date, start_time = start_time, end_time = end_time)
+    emp_shift = EmployeeShift(emp_id = emp_id, 
+                              date = date, 
+                              start_time = start_time, 
+                              end_time = end_time)
     return emp_shift
 
 def create_set_shift(start, end, display):
-    set_shift = SetShift(start_time = start, end_time = end, display = display)
+    set_shift = SetShift(start_time = start, 
+                         end_time = end, 
+                         display = display)
     return set_shift
 
 def get_all_set_shifts():
@@ -36,13 +46,21 @@ def get_all_stations():
     all_stations = Station.query.all()
     return all_stations
 
-def is_in_time_range(current_time, start_time, end_time):
-	if start_time <= current_time < end_time:
-		return True
-	else:
-		return False
+def create_assignment(emp_id, station_id, shift_id, date):
+    assignment = Assignment(emp_id = emp_id, 
+                            station_id = station_id, 
+                            shift_id = shift_id, 
+                            date = date)
+    return assignment
 
-def shifts_in_range(set_shift_id):
+
+def is_in_time_range(current_time, start_time, end_time):
+	return start_time <= current_time <= end_time
+	# 	 True
+	# else:
+	# 	return False
+
+def shifts_in_range(set_shift_id, date):
     all_shifts = EmployeeShift.query.all()
     filtered_shifts = []
     set_shift = SetShift.query.get(set_shift_id)
@@ -51,14 +69,23 @@ def shifts_in_range(set_shift_id):
     end_string = set_shift.end_time
     end_time = datetime.strptime(end_string, "%H:%M:%S")
     for shift in all_shifts:
+        shift_date = datetime.strptime(shift.date, "%m-%d-%Y").date()
         emp_start = datetime.strptime(shift.start_time, "%H:%M:%S")
         emp_end = datetime.strptime(shift.end_time, "%H:%M:%S")
-        if is_in_time_range(emp_start, start_time, end_time) or is_in_time_range(emp_end, start_time, end_time):
+        if shift_date == date and (is_in_time_range(emp_start, start_time, end_time) or is_in_time_range(emp_end, start_time, end_time)):
             filtered_shifts.append(shift.id)
     return filtered_shifts
 
 def get_employees_from_shift_ids(shift_ids):
-    Employee.query.get(shift_ids).all()
-    """
-    use the magic relationships to acces employee names from emp_shift id's 
-    """
+    employees = {}
+    for id in shift_ids:
+        employee_shift = EmployeeShift.query.get(id)
+        full_start = datetime.strptime(employee_shift.start_time, "%H:%M:%S")
+        full_end = datetime.strptime(employee_shift.end_time, "%H:%M:%S")
+        employees[employee_shift.id] = {
+            'first': employee_shift.employee.fname,
+            'last': employee_shift.employee.lname,
+            'start': full_start.strftime("%I:%M %p"),
+            'end': full_end.strftime("%I:%M %p")
+        }
+    return employees
