@@ -17,14 +17,18 @@ def shift_viewer():
     if 'employees_on_shift' in session:
         emps = session.get('employees_on_shift')
     else:
-        emps = ['nothing']
-    print(f"session shift id {type(session['shift_id'])}")
+        emps = crud.get_employees_from_shift_ids([1])
+    if 'shift_id' in session:
+        shift_id = session.get('shift_id')
+    else:
+        shift_id = 1
+    # print(f"session shift id {type(session['shift_id'])}")
     return render_template("shiftEditor.html", 
                            emps = emps, 
                            shifts = shifts, 
                            stations = stations,
                            selected_date = session.get('selected_date'),
-                           selected_shift_id = int(session.get('shift_id')))
+                           selected_shift_id = shift_id)
 
 @app.route('/switchShifts', methods=["POST"])
 def switch_shifts():
@@ -51,7 +55,7 @@ def make_assignments():
     # Access the selected_shift_id and selected_date from the request data
     selected_shift_id = assignment_data.get('selectedShift')
     selected_date = assignment_data.get('calendar')
-
+    print(assignment_data)
     # Iterate through the assignment data and create assignment objects
     for station_id, employee_id in assignment_data.items():
         if station_id not in ['selectedShift', 'calendar']:
@@ -71,6 +75,8 @@ def make_assignments():
         response = {'success': False, 'message': 'Error creating assignments.', 'error': str(e)}
 
     return jsonify(response)
+# redirect with response broken up into variables that are passed through session
+# station Id and employee id
 
 
 

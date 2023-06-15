@@ -82,7 +82,7 @@ def get_employees_from_shift_ids(shift_ids):
         employee_shift = EmployeeShift.query.get(id)
         full_start = datetime.strptime(employee_shift.start_time, "%H:%M:%S")
         full_end = datetime.strptime(employee_shift.end_time, "%H:%M:%S")
-        employees[employee_shift.id] = {
+        employees[employee_shift.employee.id] = {
             'first': employee_shift.employee.fname,
             'last': employee_shift.employee.lname,
             'start': full_start.strftime("%I:%M %p"),

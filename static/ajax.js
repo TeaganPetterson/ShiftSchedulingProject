@@ -2,7 +2,7 @@
 // Things like selecting a new date or shift will show the selected shifts' employees, and stuff like adding an employee to a new station will automatically save it to a database
 $(document).ready(function () {
 	// Attach event listeners to date and shift select elements
-	$('#calendar, #selectedShift').on('click', function (event) {
+	$('#calendar, #selectedShift').on('change', function (event) {
 		event.preventDefault()
 		var selectedDate = $('#calendar').val();
 		var selectedShift = $('#selectedShift').val();
@@ -28,7 +28,7 @@ $(document).ready(function () {
 	});
 
 	// Attach event listener to the shiftAssignment form submit button
-	$('#shiftAssignment button[type="submit"]').on('click', function (event) {
+	$('#shiftAssignment').on('submit', function (event) {
 		event.preventDefault(); // Prevent the form from submitting
 
 		// Create an object to store the selected employees for each station
@@ -62,3 +62,5 @@ $(document).ready(function () {
 		});
 	});
 });
+
+console.log('hi');

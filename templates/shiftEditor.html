@@ -29,8 +29,8 @@
 </form><br>
 <form action="/makeAssignments" method="POST" id="shiftAssignment">
 	{% for station in stations %}
-	<label for="{{ station.station }}">{{ station.station }}</label>
-	<select id="{{ station.station }}">
+	<label for="{{ station.id }}">{{ station.station }}</label>
+	<select id="{{ station.id }}">
 		<!-- Populate the dropdown menu with employees -->
 		{% for employee_id, employee_info in emps.items() %}
 		<option value="{{ employee_id }}">{{ employee_info.first }} {{ employee_info.last }}</option>
@@ -52,6 +52,8 @@
 {% endblock %}
 
 {% block scripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="/static/ajax.js"></script>
 <script>
 	function autoClick() {
 		if (document.getElementById("calendar").value != "") {

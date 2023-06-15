@@ -48,6 +48,7 @@ class Station(db.Model):
 class Assignment(db.Model):
 
 	__tablename__ = "assignments"
+	__table_args__ = (db.UniqueConstraint("emp_id", "shift_id", "date"),)
 
 	id = db.Column(db.Integer, primary_key=True, autoincrement = True)
 	station_id = db.Column(db.Integer, db.ForeignKey("stations.id"), nullable=False)
