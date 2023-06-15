@@ -89,3 +89,16 @@ def get_employees_from_shift_ids(shift_ids):
             'end': full_end.strftime("%I:%M %p")
         }
     return employees
+
+def get_assignments(date, shift_id):
+    selected_assignments = {}
+    assignments = Assignment.query.filter(date == date, 
+                                          shift_id == shift_id).all()
+    for assignment in assignments:
+        # print(dir(assignment))
+        employee = Employee.query.filter(Employee.id == assignment.emp_id).first()
+        # print(dir(employee))
+        name = f"{employee.fname} {employee.lname}"
+        station = Station.query.filter(Station.id == assignment.station_id).first()
+        selected_assignments[station.station] = name
+    return selected_assignments

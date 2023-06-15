@@ -39,7 +39,8 @@ def switch_shifts():
     session['selected_date'] = request.form.get("calendar")
     shift_ids = crud.shifts_in_range(shift_id, selected_date)
     session['employees_on_shift'] = crud.get_employees_from_shift_ids(shift_ids)
-    # change unassigned_emps to the session['employees'] variable
+    session['assignments'] = crud.get_assignments(selected_date, shift_id)
+    print(session['assignments'])
     return redirect('/')
 
 """
