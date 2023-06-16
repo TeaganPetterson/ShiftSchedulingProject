@@ -22,11 +22,16 @@ def shift_viewer():
         shift_id = session.get('shift_id')
     else:
         shift_id = 1
+    if 'assignments' in session:
+        assignments = session.get('assignments')
+    else:
+        assignments = {'Mixing': '', 'Customer Experience': '', 'Dressing': '', 'Ovens': '', 'Prep': ''}
     # print(f"session shift id {type(session['shift_id'])}")
     return render_template("shiftEditor.html", 
                            emps = emps, 
                            shifts = shifts, 
                            stations = stations,
+                           assignments = assignments,
                            selected_date = session.get('selected_date'),
                            selected_shift_id = shift_id)
 
@@ -40,6 +45,7 @@ def switch_shifts():
     shift_ids = crud.shifts_in_range(shift_id, selected_date)
     session['employees_on_shift'] = crud.get_employees_from_shift_ids(shift_ids)
     session['assignments'] = crud.get_assignments(selected_date, shift_id)
+    print(session['employees_on_shift'])
     print(session['assignments'])
     return redirect('/')
 
