@@ -28,7 +28,7 @@ $(document).ready(function () {
 	});
 
 	// Attach event listener to the shiftAssignment form submit button
-	$('#shiftAssignment').on('submit', function (event) {
+	$('#1', '#2', '#3', '#4', '#5').on('change', function (event) {
 		event.preventDefault(); // Prevent the form from submitting
 
 		// Create an object to store the selected employees for each station
@@ -53,8 +53,10 @@ $(document).ready(function () {
 			type: 'POST',
 			data: assignmentData,
 			success: function (response) {
-				// Handle the response here if needed
-				// You can update the UI or perform any other actions based on the response
+				// might need to add a bootstrap popup if the response is an error
+				if (response.success === false){
+					//bootstrap popup
+				}
 			},
 			error: function (error) {
 				console.error('AJAX request failed:', error);

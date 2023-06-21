@@ -19,20 +19,24 @@ def shift_viewer():
     else:
         emps = crud.get_employees_from_shift_ids([1])
     if 'shift_id' in session:
-        shift_id = session.get('shift_id')
+        shift_id = int(session.get('shift_id'))
     else:
         shift_id = 1
-    if 'assignments' in session:
-        assignments = session.get('assignments')
+    if 'selected_date' in session:
+        selected_date = session.get('selected_date')
     else:
-        assignments = {'Mixing': '', 'Customer Experience': '', 'Dressing': '', 'Ovens': '', 'Prep': ''}
-    # print(f"session shift id {type(session['shift_id'])}")
+        selected_date = "01-01-2000"
+    try:
+        assignments = crud.get_assignments(session.get('selected_date'), shift_id)
+    except:
+        assignments = {'Mixing': '', 'Customer Experience': '', 'Dressing': '', 'Ovens': '', 'Prep': ''} 
+    # print(f"session date {(session['selected_date'])}")
     return render_template("shiftEditor.html", 
                            emps = emps, 
                            shifts = shifts, 
                            stations = stations,
                            assignments = assignments,
-                           selected_date = session.get('selected_date'),
+                           selected_date = selected_date,
                            selected_shift_id = shift_id)
 
 @app.route('/switchShifts', methods=["POST"])
@@ -45,6 +49,7 @@ def switch_shifts():
     shift_ids = crud.shifts_in_range(shift_id, selected_date)
     session['employees_on_shift'] = crud.get_employees_from_shift_ids(shift_ids)
     session['assignments'] = crud.get_assignments(selected_date, shift_id)
+    print(selected_date)
     print(session['employees_on_shift'])
     print(session['assignments'])
     return redirect('/')
