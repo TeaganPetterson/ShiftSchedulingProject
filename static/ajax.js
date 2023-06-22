@@ -28,20 +28,20 @@ $(document).ready(function () {
 	});
 
 	// Attach event listener to the shiftAssignment form submit button
-	$('#1', '#2', '#3', '#4', '#5').on('change', function (event) {
+	$('#1, #2, #3, #4, #5').on('change', function (event) {
 		event.preventDefault(); // Prevent the form from submitting
 
 		// Create an object to store the selected employees for each station
 		var assignmentData = {};
 
 		// Loop through each station and get the selected employee
-		$('#shiftAssignment select').each(function () {
-			var stationId = $(this).attr('id');
-			var employeeId = $(this).val();
+		// $('#shiftAssignment select').each(function () {
+		var stationId = $(this).attr('id');
+		var employeeId = $(this).val();
 
-			// Add the employee ID to the assignmentData object
-			assignmentData[stationId] = employeeId;
-		});
+		// Add the employee ID to the assignmentData object
+		assignmentData[stationId] = employeeId;
+		// });
 
 		// Add the selectedShift and calendar values to the assignmentData object
 		assignmentData.selectedShift = $('#selectedShift').val();
@@ -54,7 +54,7 @@ $(document).ready(function () {
 			data: assignmentData,
 			success: function (response) {
 				// might need to add a bootstrap popup if the response is an error
-				if (response.success === false){
+				if (response.success === false) {
 					//bootstrap popup
 				}
 			},

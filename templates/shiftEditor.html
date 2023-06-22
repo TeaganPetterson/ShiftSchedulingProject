@@ -38,7 +38,9 @@
 	</select>
 	<ul id="{{ station.station }}Employees" class="selectedEmployees">
 		<!-- Display the selected employees for each station -->
+		{% if station.station in assignments %}
 		{{ assignments[station.station] }}
+		{% endif %}
 	</ul>
 	{% endfor %}
 

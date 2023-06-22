@@ -26,11 +26,12 @@ def shift_viewer():
         selected_date = session.get('selected_date')
     else:
         selected_date = "01-01-2000"
-    try:
-        assignments = crud.get_assignments(session.get('selected_date'), shift_id)
-    except:
+    if crud.get_assignments(selected_date, shift_id):
+        assignments = crud.get_assignments(selected_date, shift_id)
+        # if assignment[customer experience]
+    else:
         assignments = {'Mixing': '', 'Customer Experience': '', 'Dressing': '', 'Ovens': '', 'Prep': ''} 
-    # print(f"session date {(session['selected_date'])}")
+    print(assignments)
     return render_template("shiftEditor.html", 
                            emps = emps, 
                            shifts = shifts, 
@@ -43,15 +44,15 @@ def shift_viewer():
 def switch_shifts():
     selected_date = datetime.strptime(request.form.get("calendar"), '%Y-%m-%d').date()
     shift_id = request.form.get("selectedShift")
-    print(f"shift_id {type(shift_id)}")
+    # print(f"shift_id {type(shift_id)}")
     session['shift_id'] = shift_id
     session['selected_date'] = request.form.get("calendar")
     shift_ids = crud.shifts_in_range(shift_id, selected_date)
     session['employees_on_shift'] = crud.get_employees_from_shift_ids(shift_ids)
     session['assignments'] = crud.get_assignments(selected_date, shift_id)
-    print(selected_date)
-    print(session['employees_on_shift'])
-    print(session['assignments'])
+    # print(selected_date)
+    # print(session['employees_on_shift'])
+    # print(session['assignments'])
     return redirect('/')
 
 """
@@ -63,10 +64,10 @@ return list of employee objects
 @app.route('/makeAssignments', methods=["POST"])
 def make_assignments():
     assignment_data = request.form
-    
-    # Access the selected_shift_id and selected_date from the request data
-    selected_shift_id = assignment_data.get('selectedShift')
-    selected_date = assignment_data.get('calendar')
+
+
+    selected_shift_id = assignment_data['selectedShift']
+    selected_date = assignment_data['calendar']
     print(assignment_data)
     # Iterate through the assignment data and create assignment objects
     for station_id, employee_id in assignment_data.items():
@@ -85,12 +86,9 @@ def make_assignments():
     except Exception as e:
         db.session.rollback()
         response = {'success': False, 'message': 'Error creating assignments.', 'error': str(e)}
+    print(response)
 
-    return jsonify(response)
-# redirect with response broken up into variables that are passed through session
-# station Id and employee id
-
-
+    return redirect('/')
 
 
 if __name__ == "__main__":
