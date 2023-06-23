@@ -97,8 +97,12 @@ def get_assignments(date, shift_id):
     assignments = Assignment.query.filter(cast(Assignment.date, Date) == date, 
                                           Assignment.shift_id == shift_id).all()
     for assignment in assignments:
-        employee = Employee.query.filter(Employee.id == assignment.emp_id).first()
-        name = f"{employee.fname} {employee.lname}"
-        station = Station.query.filter(Station.id == assignment.station_id).first()
-        selected_assignments[station.station] = name
+        employees = Employee.query.filter(Employee.id == assignment.emp_id).all()
+        for employee in employees:
+            name = f"{employee.fname} {employee.lname}"
+            station = Station.query.filter(Station.id == assignment.station_id).first()
+            if station.station in selected_assignments:
+            	selected_assignments[station.station].append(name)
+            else:
+                selected_assignments[station.station] = [name]
     return selected_assignments

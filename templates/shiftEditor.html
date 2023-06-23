@@ -20,18 +20,15 @@
 			{{ shift.display }}</option>
 		{% endfor %}
 	</select>
-	<ul id="dayShift" class="selectedEmployees">
-		{% for employee_id, employee_info in emps.items() %}
-		<li>{{ employee_info.first }} {{ employee_info.last }}</li>
-		{% endfor %}
-	</ul>
-	<button type="submit" id="submitShift" display="none">Submit</button>
+	<br>
+	<button type="submit" id="submitShift" display="none" hidden>Submit</button>
 </form><br>
 <form action="/makeAssignments" method="POST" id="shiftAssignment">
 	{% for station in stations %}
 	<label for="{{ station.id }}">{{ station.station }}</label>
-	<select id="{{ station.id }}">
+	<select id="{{ station.id }}" onchange="autoClick()">
 		<!-- Populate the dropdown menu with employees -->
+		<option disabled selected value> -- Team Member -- </option>
 		{% for employee_id, employee_info in emps.items() %}
 		<option value="{{ employee_id }}">{{ employee_info.first }} {{ employee_info.last }}</option>
 		{% endfor %}
@@ -39,15 +36,22 @@
 	<ul id="{{ station.station }}Employees" class="selectedEmployees">
 		<!-- Display the selected employees for each station -->
 		{% if station.station in assignments %}
-		{{ assignments[station.station] }}
+		{% for emp in assignments[station.station] %}
+		<button class="employeeButton" data-employee="{{ emp }}">
+			{{ emp }}
+			<span class="deleteIcon">&times;</span>
+		</button>
+		<br>
+		{% endfor %}
 		{% endif %}
 	</ul>
 	{% endfor %}
 
-	<button type="submit">Submit</button>
+	<!-- <button type="submit">Submit</button> -->
 </form>
+<h3><b><u>Unassigned Employees</u></b></h3>
+<p>Right now I have nothing checking if they're unassigned</p>
 <ul id="unassignedEmployees" class="selectedEmployees">
-	<li><b><u>Unassigned Employees</u></b></li>
 	{% for employee_id, employee_info in emps.items() %}
 	<li>{{ employee_info.first }} {{ employee_info.last }}</li>
 	{% endfor %}

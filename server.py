@@ -70,6 +70,10 @@ def make_assignments():
     selected_date = assignment_data['calendar']
     print(assignment_data)
     # Iterate through the assignment data and create assignment objects
+	# check if an assignment already exists with an emp_id at a shift_id and date
+	# use sqlalchemy to check if exists
+	# if one employee is already assigned at that station, delete where the og assignments was, and update the desired station with the new emp_id
+	# instead of this for loop, I want to use sqlalchemy to update that assignment
     for station_id, employee_id in assignment_data.items():
         if station_id not in ['selectedShift', 'calendar']:
             assignment = Assignment(
@@ -88,7 +92,7 @@ def make_assignments():
         response = {'success': False, 'message': 'Error creating assignments.', 'error': str(e)}
     print(response)
 
-    return redirect('/')
+    return redirect(request.url)
 
 
 if __name__ == "__main__":
