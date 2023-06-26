@@ -92,7 +92,13 @@ def make_assignments():
         response = {'success': False, 'message': 'Error creating assignments.', 'error': str(e)}
     print(response)
 
-    return redirect(request.url)
+    return redirect('/')
+
+@app.route('/deleteAssignment', methods=["POST"])
+def delete_assignment():
+    ass_id = request.form.get('ass_id')
+    crud.delete_assignment(ass_id)
+    return jsonify({'success': True})
 
 
 if __name__ == "__main__":

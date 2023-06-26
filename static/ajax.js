@@ -56,6 +56,7 @@ $(document).ready(function () {
 				// might need to add a bootstrap popup if the response is an error
 				if (response.success === false) {
 					//bootstrap popup
+
 				}
 			},
 			error: function (error) {
@@ -65,4 +66,27 @@ $(document).ready(function () {
 	});
 });
 
-console.log('hi');
+
+function deleteAssignment(button) {
+	var assId = button.getAttribute('data-employee');
+
+	// Send an AJAX request to the server
+	$.ajax({
+		url: '/deleteAssignment',
+		type: 'POST',
+		data: { ass_id: assId },
+		success: function (response) {
+			if (response.success) {
+				// Handle success, e.g., show a message or update the UI
+				console.log('Assignment ' + assId + ' deleted successfully');
+
+			} else {
+				// Handle failure
+				console.log('Failed to delete assignment');
+			}
+		},
+		error: function (error) {
+			console.error('AJAX request failed:', error);
+		}
+	});
+}

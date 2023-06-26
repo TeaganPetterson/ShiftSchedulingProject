@@ -15,6 +15,7 @@ class Employee(db.Model):
 	lname = db.Column(db.String(20), nullable = False)
 
 	employee_shifts = db.relationship('EmployeeShift', back_populates='employee')
+	assignments = db.relationship('Assignment', back_populates='employee')
 
 class EmployeeShift(db.Model):
 
@@ -48,13 +49,15 @@ class Station(db.Model):
 class Assignment(db.Model):
 
 	__tablename__ = "assignments"
-	__table_args__ = (db.UniqueConstraint("emp_id", "shift_id", "date"),)
+	# __table_args__ = (db.UniqueConstraint("emp_id", "shift_id", "date"),)
 
 	id = db.Column(db.Integer, primary_key=True, autoincrement = True)
 	station_id = db.Column(db.Integer, db.ForeignKey("stations.id"), nullable=False)
 	emp_id = db.Column(db.Integer, db.ForeignKey("employees.id"), nullable=False)
 	shift_id = db.Column(db.Integer, db.ForeignKey("set_shifts.id"), nullable=False)
 	date = date = db.Column(db.String(15), nullable = False)
+
+	employee = db.relationship('Employee', back_populates='assignments')
 
 
 """ 

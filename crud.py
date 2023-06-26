@@ -101,8 +101,16 @@ def get_assignments(date, shift_id):
         for employee in employees:
             name = f"{employee.fname} {employee.lname}"
             station = Station.query.filter(Station.id == assignment.station_id).first()
+            emp_name = f"{assignment.employee.fname} {assignment.employee.lname}"
+            ass_id = assignment.id
             if station.station in selected_assignments:
-            	selected_assignments[station.station].append(name)
+            	selected_assignments[station.station].append({ass_id : emp_name})
             else:
-                selected_assignments[station.station] = [name]
+                selected_assignments[station.station] = [{ass_id : emp_name}]
     return selected_assignments
+
+
+def delete_assignment(ass_id):
+    Assignment.query.filter_by(id = ass_id).delete()
+    db.session.commit()
+    return f"{ass_id} deleted"

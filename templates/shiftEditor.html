@@ -33,22 +33,25 @@
 		<option value="{{ employee_id }}">{{ employee_info.first }} {{ employee_info.last }}</option>
 		{% endfor %}
 	</select>
-	<ul id="{{ station.station }}Employees" class="selectedEmployees">
-		<!-- Display the selected employees for each station -->
-		{% if station.station in assignments %}
-		{% for emp in assignments[station.station] %}
-		<button class="employeeButton" data-employee="{{ emp }}">
-			{{ emp }}
-			<span class="deleteIcon">&times;</span>
-		</button>
-		<br>
-		{% endfor %}
-		{% endif %}
-	</ul>
-	{% endfor %}
-
-	<!-- <button type="submit">Submit</button> -->
 </form>
+<ul id="{{ station.station }}Employees" class="selectedEmployees">
+	<!-- Display the selected employees for each station -->
+	{% if station.station in assignments %}
+	{% for emp in assignments[station.station] %}
+	{% for key, value in emp.items() %}
+	<button class="employeeButton" data-employee="{{ key }}" onclick="deleteAssignment(this)">
+		{{ value }}
+		<span class="deleteIcon">&times</span>
+	</button>
+	{% endfor %}
+	<br>
+	{% endfor %}
+	{% endif %}
+</ul>
+{% endfor %}
+
+<!-- <button type="submit">Submit</button> -->
+
 <h3><b><u>Unassigned Employees</u></b></h3>
 <p>Right now I have nothing checking if they're unassigned</p>
 <ul id="unassignedEmployees" class="selectedEmployees">
