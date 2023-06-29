@@ -89,4 +89,5 @@ function deleteAssignment(button) {
 			console.error('AJAX request failed:', error);
 		}
 	});
+	document.getElementById("submitShift").click()
 }

@@ -3,62 +3,66 @@
 {% block title %}Shift Planner{% endblock %}
 
 {% block stylesheets %}
-
+<link rel="stylesheet" type="text/css" href="/static/style.css">
 {% endblock %}
 
 {% block content %}
-<h1>Shift Planner</h1>
 
-<form action="/switchShifts" method="POST" id="shiftSelection">
-	<label for="calendar">Select a date:</label>
-	<input type="date" id="calendar" name="calendar" onchange="autoClick()" value="{{ selected_date|default('') }}">
+<body>
+	<h1>Shift Planner</h1>
 
-	<label for="selectedShift">Shift:</label>
-	<select id="selectedShift" name="selectedShift" onchange="autoClick()">
-		{% for shift in shifts %}
-		<option value="{{ shift.id }}" id="shift{{ shift.id }}" {% if selected_shift_id==shift.id %} selected {%endif%}>
-			{{ shift.display }}</option>
+	<form action="/switchShifts" method="POST" id="shiftSelection">
+		<label for="calendar">Select a date:</label>
+		<input type="date" id="calendar" name="calendar" onchange="autoClick()" value="{{ selected_date|default('') }}">
+
+		<label for="selectedShift">Shift:</label>
+		<select id="selectedShift" name="selectedShift" onchange="autoClick()">
+			{% for shift in shifts %}
+			<option value="{{ shift.id }}" id="shift{{ shift.id }}" {% if selected_shift_id==shift.id %} selected
+				{%endif%}>
+				{{ shift.display }}</option>
+			{% endfor %}
+		</select>
+		<br>
+		<button type="submit" id="submitShift" display="none" hidden>Submit</button>
+	</form><br>
+	<form action="/makeAssignments" method="POST" id="shiftAssignment">
+		{% for station in stations %}
+		<label for="{{ station.id }}">{{ station.station }}</label>
+		<select id="{{ station.id }}" onchange="autoClick()">
+			<!-- Populate the dropdown menu with employees -->
+			<option disabled selected value> -- Team Member -- </option>
+			{% for employee_id, employee_info in emps.items() %}
+			<option value="{{ employee_id }}">{{ employee_info.first }} {{ employee_info.last }}</option>
+			{% endfor %}
+		</select>
+	</form>
+	<ul id="{{ station.station }}Employees" class="selectedEmployees">
+		<!-- Display the selected employees for each station -->
+		{% if station.station in assignments %}
+		{% for emp in assignments[station.station] %}
+		{% for key, value in emp.items() %}
+		<button class="employeeButton button-80" data-employee="{{ key }}" onclick="deleteAssignment(this)">
+			{{ value }}
+			<span class="deleteIcon">&times</span>
+		</button>
 		{% endfor %}
-	</select>
-	<br>
-	<button type="submit" id="submitShift" display="none" hidden>Submit</button>
-</form><br>
-<form action="/makeAssignments" method="POST" id="shiftAssignment">
-	{% for station in stations %}
-	<label for="{{ station.id }}">{{ station.station }}</label>
-	<select id="{{ station.id }}" onchange="autoClick()">
-		<!-- Populate the dropdown menu with employees -->
-		<option disabled selected value> -- Team Member -- </option>
+
+		{% endfor %}
+		{% endif %}
+	</ul>
+	{% endfor %}
+
+	<!-- <button type="submit">Submit</button> -->
+
+	<h3><b><u>Unassigned Employees</u></b></h3>
+	<p>Right now I have nothing checking if they're unassigned</p>
+	<ul id="unassignedEmployees" class="selectedEmployees">
 		{% for employee_id, employee_info in emps.items() %}
-		<option value="{{ employee_id }}">{{ employee_info.first }} {{ employee_info.last }}</option>
+		<li>{{ employee_info.first }} {{ employee_info.last }}</li>
 		{% endfor %}
-	</select>
-</form>
-<ul id="{{ station.station }}Employees" class="selectedEmployees">
-	<!-- Display the selected employees for each station -->
-	{% if station.station in assignments %}
-	{% for emp in assignments[station.station] %}
-	{% for key, value in emp.items() %}
-	<button class="employeeButton" data-employee="{{ key }}" onclick="deleteAssignment(this)">
-		{{ value }}
-		<span class="deleteIcon">&times</span>
-	</button>
-	{% endfor %}
-	<br>
-	{% endfor %}
-	{% endif %}
-</ul>
-{% endfor %}
-
-<!-- <button type="submit">Submit</button> -->
-
-<h3><b><u>Unassigned Employees</u></b></h3>
-<p>Right now I have nothing checking if they're unassigned</p>
-<ul id="unassignedEmployees" class="selectedEmployees">
-	{% for employee_id, employee_info in emps.items() %}
-	<li>{{ employee_info.first }} {{ employee_info.last }}</li>
-	{% endfor %}
-</ul>
+	</ul>
+</body>
 {% endblock %}
 
 {% block scripts %}

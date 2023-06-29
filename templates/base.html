@@ -4,26 +4,35 @@
 <head>
 	<meta charset="UTF-8">
 	<title>{% block title %}{% endblock %}</title>
+	<link rel="stylesheet" type="text/css" href="/static/style.css">
+	<style>
+
+	</style>
 	{% block stylesheets %}
 
 	{% endblock %}
 </head>
 
 <body>
-	<header>
+	<div class="bg"></div>
+	<div class="bg bg2"></div>
+	<div class="bg bg3"></div>
+	<div class="content">
 
-	</header>
+		<header>
 
-	<main>
-		{% block content %}
+		</header>
 
-		{% endblock %}
-	</main>
+		<main>
+			{% block content %}
 
-	<footer>
+			{% endblock %}
+		</main>
 
-	</footer>
+		<footer>
 
+		</footer>
+	</div>
 	{% block scripts %}
 	{% endblock %}
 </body>
