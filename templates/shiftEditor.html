@@ -4,6 +4,10 @@
 
 {% block stylesheets %}
 <link rel="stylesheet" type="text/css" href="/static/style.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
 {% endblock %}
 
 {% block content %}
@@ -12,11 +16,12 @@
 	<h1>Shift Planner</h1>
 
 	<form action="/switchShifts" method="POST" id="shiftSelection">
-		<label for="calendar">Select a date:</label>
-		<input type="date" id="calendar" name="calendar" onchange="autoClick()" value="{{ selected_date|default('') }}">
+		<!-- <label for="calendar">Select a date:</label> -->
+		<input type="date" id="calendar" name="calendar" onchange="autoClick()" value="{{ selected_date|default('') }}"
+			class="calendar-input">
 
-		<label for="selectedShift">Shift:</label>
-		<select id="selectedShift" name="selectedShift" onchange="autoClick()">
+		<!-- <label for="selectedShift">Shift:</label> -->
+		<select id="selectedShift" name="selectedShift" class="select-box" onchange="autoClick()">
 			{% for shift in shifts %}
 			<option value="{{ shift.id }}" id="shift{{ shift.id }}" {% if selected_shift_id==shift.id %} selected
 				{%endif%}>
@@ -28,14 +33,17 @@
 	</form><br>
 	<form action="/makeAssignments" method="POST" id="shiftAssignment">
 		{% for station in stations %}
-		<label for="{{ station.id }}">{{ station.station }}</label>
-		<select id="{{ station.id }}" onchange="autoClick()">
-			<!-- Populate the dropdown menu with employees -->
-			<option disabled selected value> -- Team Member -- </option>
-			{% for employee_id, employee_info in emps.items() %}
-			<option value="{{ employee_id }}">{{ employee_info.first }} {{ employee_info.last }}</option>
-			{% endfor %}
-		</select>
+		<!-- <label for="{{ station.id }}">{{ station.station }}</label> -->
+		<div class="optionbox">
+			<select id="{{ station.id }}" onchange="autoClick()" class="select-box" style="height: 25px;"">
+				<!-- Populate the dropdown menu with employees -->
+				<option disabled selected value> -- {{ station.station }} -- </option>
+				{% for employee_id, employee_info in emps.items() %}
+				<option value=" {{ employee_id }}">{{ employee_info.first }} {{ employee_info.last
+				}}</option>
+				{% endfor %}
+			</select>
+		</div>
 	</form>
 	<ul id="{{ station.station }}Employees" class="selectedEmployees">
 		<!-- Display the selected employees for each station -->
@@ -55,13 +63,13 @@
 
 	<!-- <button type="submit">Submit</button> -->
 
-	<h3><b><u>Unassigned Employees</u></b></h3>
+	<!-- <h3><b><u>Unassigned Employees</u></b></h3>
 	<p>Right now I have nothing checking if they're unassigned</p>
 	<ul id="unassignedEmployees" class="selectedEmployees">
 		{% for employee_id, employee_info in emps.items() %}
 		<li>{{ employee_info.first }} {{ employee_info.last }}</li>
 		{% endfor %}
-	</ul>
+	</ul> -->
 </body>
 {% endblock %}
 
