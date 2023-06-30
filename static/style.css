@@ -149,9 +149,9 @@ h6 {
 	font-weight: 700;
 	letter-spacing: -.01em;
 	line-height: 1.3;
-	padding: .875rem 1.125rem;
+	padding: .1rem .125rem;
 	position: relative;
-	text-align: left;
+	text-align: center;
 	text-decoration: none;
 	transition: transform .2s;
 	user-select: none;
@@ -280,4 +280,14 @@ h6 {
 
 .calendar-input:disabled:active {
 	transform: none;
+}
+
+
+.selectedEmployees {
+	margin-bottom: 10px;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	padding-bottom: 10px;
+	padding-left: 0;
+	border-color: #68B0AB;
 }

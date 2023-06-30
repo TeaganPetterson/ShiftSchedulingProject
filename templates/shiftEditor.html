@@ -34,13 +34,14 @@
 	<form action="/makeAssignments" method="POST" id="shiftAssignment">
 		{% for station in stations %}
 		<!-- <label for="{{ station.id }}">{{ station.station }}</label> -->
-		<div class="optionbox">
-			<select id="{{ station.id }}" onchange="autoClick()" class="select-box" style="height: 25px;"">
+		<div style="padding: .2rem;">
+			<select id="{{ station.id }}" onchange="autoClick()" class="select-box"
+				style="height: 25px; font-size: small;">
 				<!-- Populate the dropdown menu with employees -->
 				<option disabled selected value> -- {{ station.station }} -- </option>
 				{% for employee_id, employee_info in emps.items() %}
 				<option value=" {{ employee_id }}">{{ employee_info.first }} {{ employee_info.last
-				}}</option>
+					}}</option>
 				{% endfor %}
 			</select>
 		</div>
