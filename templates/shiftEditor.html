@@ -16,11 +16,9 @@
 	<h1>Shift Planner</h1>
 
 	<form action="/switchShifts" method="POST" id="shiftSelection">
-		<!-- <label for="calendar">Select a date:</label> -->
 		<input type="date" id="calendar" name="calendar" onchange="autoClick()" value="{{ selected_date|default('') }}"
 			class="calendar-input">
 
-		<!-- <label for="selectedShift">Shift:</label> -->
 		<select id="selectedShift" name="selectedShift" class="select-box" onchange="autoClick()">
 			{% for shift in shifts %}
 			<option value="{{ shift.id }}" id="shift{{ shift.id }}" {% if selected_shift_id==shift.id %} selected
@@ -40,8 +38,7 @@
 				<!-- Populate the dropdown menu with employees -->
 				<option disabled selected value> -- {{ station.station }} -- </option>
 				{% for employee_id, employee_info in emps.items() %}
-				<option value=" {{ employee_id }}">{{ employee_info.first }} {{ employee_info.last
-					}}</option>
+				<option value=" {{ employee_id }}">{{ employee_info.first }} {{ employee_info.last}}</option>
 				{% endfor %}
 			</select>
 		</div>

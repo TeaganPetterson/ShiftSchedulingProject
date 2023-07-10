@@ -9,8 +9,12 @@ app = Flask(__name__)
 app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
 
-
 @app.route('/')
+def render_home():
+    return render_template('landingPage.html')
+
+
+@app.route('/homepage')
 def shift_viewer():
     shifts = crud.get_all_set_shifts()
     stations = crud.get_all_stations()
@@ -53,7 +57,7 @@ def switch_shifts():
     # print(selected_date)
     # print(session['employees_on_shift'])
     # print(session['assignments'])
-    return redirect('/')
+    return redirect('/homepage')
 
 """
 take session of employees
@@ -92,7 +96,7 @@ def make_assignments():
         response = {'success': False, 'message': 'Error creating assignments.', 'error': str(e)}
     print(response)
 
-    return redirect('/')
+    return redirect('/homepage')
 
 @app.route('/deleteAssignment', methods=["POST"])
 def delete_assignment():

@@ -55,7 +55,7 @@ def create_assignment(emp_id, station_id, shift_id, date):
 
 
 def is_in_time_range(current_time, start_time, end_time):
-	return start_time <= current_time <= end_time
+	return start_time <= current_time < end_time
 	# 	 True
 	# else:
 	# 	return False
@@ -72,7 +72,7 @@ def shifts_in_range(set_shift_id, date):
         shift_date = datetime.strptime(shift.date, "%m-%d-%Y").date()
         emp_start = datetime.strptime(shift.start_time, "%H:%M:%S")
         emp_end = datetime.strptime(shift.end_time, "%H:%M:%S")
-        if shift_date == date and (is_in_time_range(emp_start, start_time, end_time) or is_in_time_range(emp_end, start_time, end_time)):
+        if shift_date == date and (is_in_time_range(emp_start, start_time, end_time) or is_in_time_range(emp_end, start_time, end_time) or ((emp_start < start_time) and (emp_end > end_time))):
             filtered_shifts.append(shift.id)
     return filtered_shifts
 
@@ -103,6 +103,7 @@ def get_assignments(date, shift_id):
             station = Station.query.filter(Station.id == assignment.station_id).first()
             emp_name = f"{assignment.employee.fname} {assignment.employee.lname}"
             ass_id = assignment.id
+            
             if station.station in selected_assignments:
             	selected_assignments[station.station].append({ass_id : emp_name})
             else:
