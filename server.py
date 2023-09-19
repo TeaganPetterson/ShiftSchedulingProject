@@ -35,8 +35,7 @@ def shift_viewer():
         # if assignment[customer experience]
     else:
         assignments = {'Mixing': '', 'Customer Experience': '', 'Dressing': '', 'Ovens': '', 'Prep': ''} 
-    print(f'assignments {assignments}')
-    print(f'emps {emps}')
+    print(assignments)
     return render_template("shiftEditor.html", 
                            emps = emps, 
                            shifts = shifts, 
