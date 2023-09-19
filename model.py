@@ -28,6 +28,7 @@ class EmployeeShift(db.Model):
 	end_time = db.Column(db.String(15), nullable = False)
 
 	employee = db.relationship('Employee', back_populates='employee_shifts')
+	assignments = db.relationship('Assignment', back_populates='emp_shift')
 
 
 class SetShift(db.Model):
@@ -55,9 +56,11 @@ class Assignment(db.Model):
 	station_id = db.Column(db.Integer, db.ForeignKey("stations.id"), nullable=False)
 	emp_id = db.Column(db.Integer, db.ForeignKey("employees.id"), nullable=False)
 	shift_id = db.Column(db.Integer, db.ForeignKey("set_shifts.id"), nullable=False)
+	emp_shift_id = db.Column(db.Integer, db.ForeignKey("employee_shifts.id"), nullable=False)
 	date = date = db.Column(db.String(15), nullable = False)
 
 	employee = db.relationship('Employee', back_populates='assignments')
+	emp_shift = db.relationship('EmployeeShift', back_populates='assignments')
 
 
 """ 

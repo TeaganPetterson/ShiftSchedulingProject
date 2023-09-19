@@ -94,8 +94,7 @@ from sqlalchemy import cast, Date
 
 def get_assignments(date, shift_id):
     selected_assignments = {}
-    assignments = Assignment.query.filter(cast(Assignment.date, Date) == date, 
-                                          Assignment.shift_id == shift_id).all()
+    assignments = Assignment.query.filter(cast(Assignment.date, Date) == date, Assignment.shift_id == shift_id).all()
     for assignment in assignments:
         employees = Employee.query.filter(Employee.id == assignment.emp_id).all()
         for employee in employees:
