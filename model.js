@@ -140,3 +140,12 @@ Assignment.init(
 		timestamps: false
 	}
 );
+
+module.exports = {
+	sequelize,
+	Employee,
+	EmployeeShift,
+	SetShift,
+	Station,
+	Assignment
+};
