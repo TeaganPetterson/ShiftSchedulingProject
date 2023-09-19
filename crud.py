@@ -46,10 +46,13 @@ def get_all_stations():
     all_stations = Station.query.all()
     return all_stations
 
-def create_assignment(emp_id, station_id, shift_id, date):
+def create_assignment(emp_id, station_id, shift_id, emp_shift_id, date):
+    employee_shift = EmployeeShift.query.filter(EmployeeShift.id == emp_shift_id).first()
+    emp_id = employee_shift.emp_id
     assignment = Assignment(emp_id = emp_id, 
                             station_id = station_id, 
                             shift_id = shift_id, 
+                            emp_shift_id = emp_shift_id,
                             date = date)
     return assignment
 

@@ -2,7 +2,7 @@ from flask import (Flask, render_template, request, flash, session,
                    redirect, jsonify)
 from jinja2 import StrictUndefined
 from datetime import datetime
-from model import db, connect_to_db, Assignment
+from model import db, connect_to_db, Assignment, EmployeeShift
 import crud
 
 app = Flask(__name__)
@@ -72,18 +72,17 @@ def make_assignments():
 
     selected_shift_id = assignment_data['selectedShift']
     selected_date = assignment_data['calendar']
-    print(assignment_data)
-    # Iterate through the assignment data and create assignment objects
-	# check if an assignment already exists with an emp_id at a shift_id and date
-	# use sqlalchemy to check if exists
-	# if one employee is already assigned at that station, delete where the og assignments was, and update the desired station with the new emp_id
-	# instead of this for loop, I want to use sqlalchemy to update that assignment
-    for station_id, employee_id in assignment_data.items():
+    print(f'assignment_data {assignment_data}')
+
+    for station_id, emp_shift_id in assignment_data.items():
         if station_id not in ['selectedShift', 'calendar']:
+            employee_shift = EmployeeShift.query.get(emp_shift_id)
+            emp_id = employee_shift.emp_id
             assignment = Assignment(
                 station_id=station_id,
-                emp_id=employee_id,
+                emp_id=emp_id,
                 shift_id=selected_shift_id,
+                emp_shift_id=emp_shift_id,
                 date=selected_date
             )
             db.session.add(assignment)
