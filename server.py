@@ -54,9 +54,6 @@ def switch_shifts():
     shift_ids = crud.shifts_in_range(shift_id, selected_date)
     session['employees_on_shift'] = crud.get_employees_from_shift_ids(shift_ids)
     session['assignments'] = crud.get_assignments(selected_date, shift_id)
-    # print(selected_date)
-    # print(session['employees_on_shift'])
-    # print(session['assignments'])
     return redirect('/homepage')
 
 """

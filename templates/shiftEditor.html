@@ -49,8 +49,9 @@
 		{% for emp in assignments[station.station] %}
 		{% for key, value in emp.items() %}
 		<button class="employeeButton button-80" data-employee="{{ key }}" onclick="deleteAssignment(this)">
-			{{ value }}
-			<span class="deleteIcon">&times</span>
+			<div class="employeeDisplayName">{{ value[0] }}</div>
+			<div class="employeeDisplayTime">{{ value[1] }}</div>
+			<!-- <span class=" deleteIcon">&times</span> -->
 		</button>
 		{% endfor %}
 
