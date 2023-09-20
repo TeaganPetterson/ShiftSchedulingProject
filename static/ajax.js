@@ -37,10 +37,10 @@ $(document).ready(function () {
 		// Loop through each station and get the selected employee
 		// $('#shiftAssignment select').each(function () {
 		var stationId = $(this).attr('id');
-		var employeeId = $(this).val();
+		var employeeShiftId = $(this).val();
 
 		// Add the employee ID to the assignmentData object
-		assignmentData[stationId] = employeeId;
+		assignmentData[stationId] = employeeShiftId;
 		// });
 
 		// Add the selectedShift and calendar values to the assignmentData object
