@@ -163,8 +163,8 @@ h6 {
 	/* background-image: url('dropdown-arrow.png');
 	background-repeat: no-repeat;
 	background-position: right center;
-	padding-right: 20px; */
-}
+	padding-right: 20px;   */
+} 
 
 .select-box:hover {
 	transform: scale(1.05);
