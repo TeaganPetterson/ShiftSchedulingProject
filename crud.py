@@ -6,20 +6,10 @@ def create_employee(fname, lname):
                         lname = lname)
     return employee
 
-# def create_assignment(emp_id, station_id, shift_id, date):
-#     employee = Employee(fname = fname, lname = lname)
-#     return employee
-
 def get_all_employees():
     employees = Employee.query.all()
     return employees
 
-def get_unassigned_employees():
-    un_emps = Employee.query.filter(station_id = None)
-    
-# def get_available_employees(shift_id):
-#     # get start time and end time from shift_id 
-#     # pull employee shifts that start before the end time and end after the start time
 
 def create_employee_shift(emp_id, date, start_time, end_time):
     emp_shift = EmployeeShift(emp_id = emp_id, 
@@ -59,9 +49,6 @@ def create_assignment(emp_id, station_id, shift_id, emp_shift_id, date):
 
 def is_in_time_range(current_time, start_time, end_time):
 	return start_time <= current_time < end_time
-	# 	 True
-	# else:
-	# 	return False
 
 def shifts_in_range(set_shift_id, date):
     all_shifts = EmployeeShift.query.all()
@@ -118,25 +105,22 @@ def get_assignments(date, shift_id):
             	selected_assignments[station.station].append({ass_id : [emp_name, shift_times]})
             else:
                 selected_assignments[station.station] = [{ass_id : [emp_name, shift_times]}]
+                
     return selected_assignments
 
 
 def convert_time_to_display_format(time):
     if int(time[0:2]) > 12:
         og_hour = int(time[0:2])
-        print(f'og hour {og_hour}')
-        print(f'og hour {type(og_hour)}')
         hour = str(og_hour - 12)
-        print(f'hour {hour}')
-        print(f'hour {type(hour)}')
         time = time.replace(str(og_hour), hour, 1)
         time = f'{time} PM'
-        print(f'new time {time}')
     else:
         time = f'{time} AM'
 
     if time[0] == "0":
-        time.pop(0)
+        # time.pop(0)
+        time = time[1:-1]
     new_time = f'{time[0:-6]}{time[-3::]}'
 
     return new_time

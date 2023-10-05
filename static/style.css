@@ -163,8 +163,8 @@ h6 {
 	/* background-image: url('dropdown-arrow.png');
 	background-repeat: no-repeat;
 	background-position: right center;
-	padding-right: 20px; */
-}
+	padding-right: 20px;   */
+} 
 
 .select-box:hover {
 	transform: scale(1.05);
@@ -301,3 +301,46 @@ h6 {
 .employeeDisplayTime {
 	font-size: x-small;
 }
+
+/* Existing styles */
+
+/* Add these styles for the column layout */
+.column-container {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+.column-item {
+	flex: 0 0 calc(50% - 10px);
+	/* Adjust the width as needed */
+	margin-bottom: 20px;
+}
+
+.column-item:nth-child(odd) {
+	margin-right: 10px;
+	/* Add margin to odd-indexed items on the right side */
+}
+
+/* Rest of your existing CSS */
+
+/*
+.custom-columns {
+	column-count: 2;
+
+	column-gap: 20px;
+
+}
+
+.custom-columns li:nth-child(odd) {
+	break-inside: avoid;
+	margin-bottom: 20px;
+	float: left;
+}
+
+.custom-columns li:nth-child(even) {
+	break-inside: avoid;
+	margin-bottom: 20px;
+	float: right;
+}
+*/

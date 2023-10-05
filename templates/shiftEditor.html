@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Shift Planner{% endblock %}
+{% block title %}GoodShift{% endblock %}
 
 {% block stylesheets %}
 <link rel="stylesheet" type="text/css" href="/static/style.css">
@@ -29,21 +29,21 @@
 		<br>
 		<button type="submit" id="submitShift" display="none" hidden>Submit</button>
 	</form><br>
+
+
 	<form action="/makeAssignments" method="POST" id="shiftAssignment">
 		{% for station in stations %}
 		<!-- <label for="{{ station.id }}">{{ station.station }}</label> -->
 		<div style="padding: .2rem;">
-			<select id="{{ station.id }}" onchange="autoClick()" class="select-box"
-				style="height: 25px; font-size: small;">
+			<select id="{{ station.id }}" onchange="autoClick()" class="select-box" style="height: 25px; font-size: small;">
 				<!-- Populate the dropdown menu with employees -->
 				<option disabled selected value> -- {{ station.station }} -- </option>
 				{% for employee_id, employee_info in emps.items() %}
 				<option value=" {{ employee_id }}">{{ employee_info.first }} {{ employee_info.last}}</option>
 				{% endfor %}
 			</select>
-		</div>
 	</form>
-	<ul id="{{ station.station }}Employees" class="selectedEmployees">
+	<div id="{{ station.station }}Employees" class="selectedEmployees">
 		<!-- Display the selected employees for each station -->
 		{% if station.station in assignments %}
 		{% for emp in assignments[station.station] %}
@@ -57,24 +57,16 @@
 
 		{% endfor %}
 		{% endif %}
-	</ul>
-	{% endfor %}
-
-	<!-- <button type="submit">Submit</button> -->
-
-	<!-- <h3><b><u>Unassigned Employees</u></b></h3>
-	<p>Right now I have nothing checking if they're unassigned</p>
-	<ul id="unassignedEmployees" class="selectedEmployees">
-		{% for employee_id, employee_info in emps.items() %}
-		<li>{{ employee_info.first }} {{ employee_info.last }}</li>
+	</div>
 		{% endfor %}
-	</ul> -->
 </body>
 {% endblock %}
 
 {% block scripts %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 <script src="/static/ajax.js"></script>
+
 <script>
 	function autoClick() {
 		if (document.getElementById("calendar").value != "") {
