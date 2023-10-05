@@ -69,7 +69,6 @@ def make_assignments():
 
     selected_shift_id = assignment_data['selectedShift']
     selected_date = assignment_data['calendar']
-    print(f'assignment_data {assignment_data}')
 
     for station_id, emp_shift_id in assignment_data.items():
         if station_id not in ['selectedShift', 'calendar']:
@@ -90,7 +89,6 @@ def make_assignments():
     except Exception as e:
         db.session.rollback()
         response = {'success': False, 'message': 'Error creating assignments.', 'error': str(e)}
-    print(response)
 
     return redirect('/homepage')
 

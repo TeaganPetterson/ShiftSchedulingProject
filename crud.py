@@ -112,19 +112,15 @@ def get_assignments(date, shift_id):
 def convert_time_to_display_format(time):
     if int(time[0:2]) > 12:
         og_hour = int(time[0:2])
-        print(f'og hour {og_hour}')
-        print(f'og hour {type(og_hour)}')
         hour = str(og_hour - 12)
-        print(f'hour {hour}')
-        print(f'hour {type(hour)}')
         time = time.replace(str(og_hour), hour, 1)
         time = f'{time} PM'
-        print(f'new time {time}')
     else:
         time = f'{time} AM'
 
     if time[0] == "0":
-        time.pop(0)
+        # time.pop(0)
+        time = time[1:-1]
     new_time = f'{time[0:-6]}{time[-3::]}'
 
     return new_time
